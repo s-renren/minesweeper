@@ -121,3 +121,19 @@
   height: 1em;
   margin-left: 0.5rem;
 }
+
+.board {
+  display: flex;
+  flex: row;
+  flex-wrap: wrap;
+  width: 288px;
+  height: 288px;
+  background-color: #aaa;
+}
+
+.stone {
+  width: 32px;
+  height: 32px;
+  background-color: #ccc;
+  border: outset 5px #ddd;
+}
