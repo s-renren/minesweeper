@@ -12,6 +12,7 @@
   width: 30px;
   height:30px;
   background: url('../../assets/images/icons.png') no-repeat;
+  border: solid 1px black;
 }
 
 .main {
