@@ -4,16 +4,17 @@ import styles from './index.module.css';
 const Home = () => {
   const [firstClick, setFirstClick] = useState(true);
 
-  const board = [...Array(9)].map((_, y) => [...Array(9)].map((_, x) => ((y + x + 1) % 13) - 1));
+  const board = [...Array(9)].map(() => [...Array(9)].map(() => -1));
   const [userInputs, setUserInputs] = useState<(0 | 1 | 2 | 3)[][]>(
     [...Array(9)].map(() => [...Array(9)].map(() => 0))
   );
   const [bombMap, setBombMap] = useState<(0 | 1)[][]>(
     [...Array(9)].map(() => [...Array(9)].map(() => 0))
   );
+  const newBombMap = structuredClone(bombMap);
+  const newUserInputs = structuredClone(userInputs);
 
   const clickLeft = (x: number, y: number) => {
-    const newBombMap = structuredClone(bombMap);
     const bombCount = () => newBombMap.flat().filter((x) => x === 1).length;
     if (firstClick) {
         while (bombCount() < 10) {
@@ -22,18 +23,29 @@ const Home = () => {
           if (!(newx === x && newy === y)) {
             newBombMap[newy][newx] = 1;
           }
-        }
+        };
         setBombMap(newBombMap);
         setFirstClick(false);
       } else {
-        const newUserInputs = [...userInputs];
         newUserInputs[y][x] = 1;
         setUserInputs(newUserInputs);
       }
-    }
+    };
   const clickRight = (x: number, y: number) => {
-    const newBoard = structuredClone(board);
+    document.getElementsByTagName("html")[0].oncontextmenu = () => false;
+    const userInput = userInputs[y][x];
+    if (userInput === 1) return;
+    const newUserInput = (userInput === 0 ? 2 : userInput === 2 ? 3 : userInput === 3 ? 0 : userInput);
+    newUserInputs[y][x] = newUserInput;
+    setUserInputs(newUserInputs);
   };
+  userInputs.forEach((row, j) =>
+    row.forEach((userInput, i) => {
+      if (userInput === 1) {
+        //checkAround8(i, j);
+      }
+    })
+  );
   return (
     <div className={styles.container}>
       <div className={styles.board}>
