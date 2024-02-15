@@ -13,8 +13,33 @@ const Home = () => {
   );
   const newBombMap = structuredClone(bombMap);
   const newUserInputs = structuredClone(userInputs);
+  const isFailed = () =>
+    bombMap.flat().filter((bomb, index) => bomb === 1 && userInputs.flat()[index] === 1).length > 0;
+
+
+  const checkAround8 = (x: number, y: number) => {
+    board[y][x] =
+      [-1, 0, 1].map((dx) =>
+        [-1, 0, 1].map((dy) =>
+          bombMap[y + dy] !== undefined && bombMap[y + dy][x + dx] === 1
+        )
+      )
+      .flat()
+      .filter(Boolean).length;
+
+    if (board[y][x] === 0) {
+      [-1, 0, 1].forEach((dx) =>
+        [-1, 0, 1].forEach((dy) => {
+          if (board[y + dy]?.[x + dx] === -1) {
+            checkAround8(x + dx, y + dy);
+          }
+        })
+      );
+    }
+  };
 
   const clickLeft = (x: number, y: number) => {
+    if (isFailed()) return;
     const bombCount = () => newBombMap.flat().filter((x) => x === 1).length;
     if (firstClick) {
         while (bombCount() < 10) {
@@ -42,7 +67,8 @@ const Home = () => {
   userInputs.forEach((row, j) =>
     row.forEach((userInput, i) => {
       if (userInput === 1) {
-        //checkAround8(i, j);
+        checkAround8(i, j)
+        board[j][i] = 11;
       }
     })
   );
@@ -53,7 +79,7 @@ const Home = () => {
           row.map((number, x) => (
             <div
               className={number === -1 ? styles.stone : styles.number}
-              style={{ backgroundPositionX: 30 - 30 * number }}
+              style={{ backgroundPositionX: 30 - 30 * number}}
               key={`${y}-${x}`}
               onClick={() => clickLeft(x, y)}
               onContextMenu={() => clickRight(x, y)}

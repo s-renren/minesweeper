@@ -10,8 +10,9 @@
 
 .number {
   width: 30px;
-  height:30px;
+  height: 30px;
   background: url('../../assets/images/icons.png') no-repeat;
+  border: solid 1px #fff;
 }
 
 .main {
@@ -132,8 +133,8 @@
 }
 
 .stone {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   background-color: #ccc;
   border: outset 5px #ddd;
 }
