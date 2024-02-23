@@ -10,6 +10,25 @@ const Home = () => {
   const newBombMap = structuredClone(bombMap);
   const newUserInputs = structuredClone(userInputs);
 
+  const checkAround8 = (x: number, y: number) => {
+    board[y][x] = [-1, 0, 1]
+      .map((dx) =>
+        [-1, 0, 1].map((dy) => bombMap[y + dy] !== undefined && bombMap[y + dy][x + dx] === 1)
+      )
+      .flat()
+      .filter(Boolean).length;
+
+    if (board[y][x] === 0) {
+      [-1, 0, 1].forEach((dx) =>
+        [-1, 0, 1].forEach((dy) => {
+          if (board[y + dy]?.[x + dx] === 1) {
+            checkAround8(x + dx, y + dy);
+          }
+        })
+      );
+    }
+  };
+
   const clickL = (x: number, y: number) => {
     const bombCount = () => newBombMap.flat().filter((value) => value === 1).length;
     if (firstClick) {
@@ -38,10 +57,17 @@ const Home = () => {
       const newUserInput =
         userInput === 0 ? 2 : userInput === 2 ? 3 : userInput === 3 ? 0 : userInput;
       newUserInputs[y][x] = newUserInput;
-      console.log(newUserInput);
       setUserInputs(newUserInputs);
     }
   };
+
+  userInputs.forEach((row, j) =>
+    row.forEach((userInput, i) => {
+      if (userInput === 1) {
+        checkAround8(i, j);
+      }
+    })
+  );
 
   return (
     <div className={styles.container}>
