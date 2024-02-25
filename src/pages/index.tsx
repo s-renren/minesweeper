@@ -9,6 +9,9 @@ const Home = () => {
   const [firstClick, setFirstClick] = useState(true);
   const newBombMap = structuredClone(bombMap);
   const newUserInputs = structuredClone(userInputs);
+  const bombCount = () => newBombMap.flat().filter((value) => value === 1).length;
+  const isFailed = () =>
+    bombMap.flat().filter((bomb, index) => bomb === 1 && userInputs.flat()[index] === 1).length > 0;
 
   const checkAround8 = (x: number, y: number) => {
     board[y][x] = [-1, 0, 1]
@@ -30,7 +33,16 @@ const Home = () => {
   };
 
   const clickL = (x: number, y: number) => {
-    const bombCount = () => newBombMap.flat().filter((value) => value === 1).length;
+    if (isFailed()) {
+      bombMap.forEach((row, j) =>
+        row.forEach((userInput, i) => {
+          if (userInput === 1) {
+            board[j][i] = 11;
+          }
+        })
+      );
+      return;
+    }
     if (firstClick) {
       const setUpBombMap = () => {
         while (bombCount() < 10) {
@@ -50,6 +62,7 @@ const Home = () => {
     }
   };
   const clickR = (x: number, y: number) => {
+    if (isFailed()) return;
     document.getElementsByTagName('html')[0].oncontextmenu = () => false;
     const userInput = userInputs[y][x];
     if (userInput === 1) return;
