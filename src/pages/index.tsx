@@ -6,10 +6,9 @@ const Home = () => {
   const zeroBoard = [...Array(9)].map(() => [...Array(9)].map(() => 0));
   const [userInputs, setUserInputs] = useState(zeroBoard);
   const [bombMap, setBombMap] = useState(zeroBoard);
-  const [firstClick, setFirstClick] = useState(true);
   const newBombMap = structuredClone(bombMap);
   const newUserInputs = structuredClone(userInputs);
-  const bombCount = () => newBombMap.flat().filter((value) => value === 1).length;
+  const isFirst = () => !bombMap.flat().includes(1);
   const isFailed = () =>
     bombMap.flat().filter((bomb, index) => bomb === 1 && userInputs.flat()[index] === 1).length > 0;
 
@@ -24,7 +23,7 @@ const Home = () => {
     if (board[y][x] === 0) {
       [-1, 0, 1].forEach((dx) =>
         [-1, 0, 1].forEach((dy) => {
-          if (board[y + dy]?.[x + dx] === 1) {
+          if (board[y + dy]?.[x + dx] === -1) {
             checkAround8(x + dx, y + dy);
           }
         })
@@ -34,16 +33,10 @@ const Home = () => {
 
   const clickL = (x: number, y: number) => {
     if (isFailed()) {
-      bombMap.forEach((row, j) =>
-        row.forEach((userInput, i) => {
-          if (userInput === 1) {
-            board[j][i] = 11;
-          }
-        })
-      );
       return;
     }
-    if (firstClick) {
+    if (isFirst()) {
+      const bombCount = () => newBombMap.flat().filter((value) => value === 1).length;
       const setUpBombMap = () => {
         while (bombCount() < 10) {
           const randomX = Math.floor(Math.random() * 9);
@@ -61,6 +54,7 @@ const Home = () => {
       setUserInputs(newUserInputs);
     }
   };
+
   const clickR = (x: number, y: number) => {
     if (isFailed()) return;
     document.getElementsByTagName('html')[0].oncontextmenu = () => false;
@@ -81,6 +75,16 @@ const Home = () => {
       }
     })
   );
+
+  if (isFailed()) {
+    bombMap.forEach((row, j) =>
+      row.forEach((userInput, i) => {
+        if (userInput === 1) {
+          board[j][i] = 12;
+        }
+      })
+    );
+  }
 
   return (
     <div className={styles.container}>
