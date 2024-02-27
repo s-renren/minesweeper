@@ -80,7 +80,7 @@ const Home = () => {
     bombMap.forEach((row, j) =>
       row.forEach((userInput, i) => {
         if (userInput === 1) {
-          board[j][i] = 12;
+          board[j][i] = 11;
         }
       })
     );
