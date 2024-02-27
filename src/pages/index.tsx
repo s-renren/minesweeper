@@ -72,6 +72,12 @@ const Home = () => {
     row.forEach((userInput, i) => {
       if (userInput === 1) {
         checkAround8(i, j);
+      } else if (userInput === 2) {
+        board[j][i] = 9;
+      } else if (userInput === 3) {
+        board[j][i] = 10;
+      } else {
+        board[j][i] = -1;
       }
     })
   );
