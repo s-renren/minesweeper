@@ -68,18 +68,25 @@ const Home = () => {
     }
   };
 
-  userInputs.forEach((row, j) =>
-    row.forEach((userInput, i) => {
-      if (userInput === 1) {
-        checkAround8(i, j);
-      } else if (userInput === 2) {
-        board[j][i] = 9;
-      } else if (userInput === 3) {
-        board[j][i] = 10;
-      } else {
-        board[j][i] = -1;
-      }
-    })
+  userInputs.forEach(
+    (row, j) =>
+      row.forEach((userInput, i) => {
+        if (userInput === 1) {
+          checkAround8(i, j);
+        }
+      }),
+
+    userInputs.forEach((row, j) =>
+      row.forEach((userInput, i) => {
+        if (userInput === 2) {
+          board[j][i] = 9;
+        } else if (userInput === 3) {
+          board[j][i] = 10;
+        } else if (userInput === 0) {
+          board[j][i] = -1;
+        }
+      })
+    )
   );
 
   if (isFailed()) {
