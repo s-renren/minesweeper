@@ -7,8 +7,8 @@
   min-height: 100vh;
   padding: 0 0.5rem;
 }
-  
-  .number {
+
+.number {
   width: 30px;
   height: 30px;
   background: url('../../assets/images/icons.png') no-repeat;
@@ -136,4 +136,8 @@
   height: 30px;
   background-color: #ccc;
   border: outset 5px #ddd;
+}
+
+.flag {
+  background: url('../../assets/images/icons.png') no-repeat;
 }
