@@ -139,5 +139,7 @@
 }
 
 .flag {
-  background: url('../../assets/images/icons.png') no-repeat;
+  background-image: url('../../assets/images/icons.png');
+  background-position: center;
+  background-size: 414px;
 }
