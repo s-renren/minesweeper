@@ -9,8 +9,18 @@ const Home = () => {
   const newBombMap = structuredClone(bombMap);
   const newUserInputs = structuredClone(userInputs);
   const isFirst = () => !bombMap.flat().includes(1);
+  const bombCount = () => newBombMap.flat().filter((value) => value === 1).length;
   const isFailed = () =>
     bombMap.flat().filter((bomb, index) => bomb === 1 && userInputs.flat()[index] === 1).length > 0;
+  const checkTrueFlag = (x: number, y: number) => {
+    [-1, 0, 1].forEach((dx) => [-1, 0, 1].forEach((dy) => {
+      // 周りのすべてのボムの上に旗がたってたらtrueでも何かの値でも出すようにする
+    }));
+  };
+
+  const checkBombArea = (x: number, y: number) => {
+    // checkTrueFlagがtrueだったら旗がたってない周りのブロックを空ける
+  };
 
   const checkAround8 = (x: number, y: number) => {
     board[y][x] = [-1, 0, 1]
@@ -36,7 +46,6 @@ const Home = () => {
       return;
     }
     if (isFirst()) {
-      const bombCount = () => newBombMap.flat().filter((value) => value === 1).length;
       const setUpBombMap = () => {
         while (bombCount() < 10) {
           const randomX = Math.floor(Math.random() * 9);
@@ -113,7 +122,7 @@ const Home = () => {
                   : styles.number
               }
               style={{
-                backgroundPositionX: 30 - 30 * number
+                backgroundPositionX: 30 - 30 * number,
               }}
               key={`${y}-${x}`}
               onClick={() => clickL(x, y)}

@@ -141,5 +141,6 @@
 .flag {
   background-image: url('../../assets/images/icons.png');
   background-position: center;
+  background-position-x: center;
   background-size: 2040%;
 }
