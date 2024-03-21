@@ -12,14 +12,41 @@ const Home = () => {
   const bombCount = () => newBombMap.flat().filter((value) => value === 1).length;
   const isFailed = () =>
     bombMap.flat().filter((bomb, index) => bomb === 1 && userInputs.flat()[index] === 1).length > 0;
-  const checkTrueFlag = (x: number, y: number) => {
-    [-1, 0, 1].forEach((dx) => [-1, 0, 1].forEach((dy) => {
-      // 周りのすべてのボムの上に旗がたってたらtrueでも何かの値でも出すようにする
-    }));
+
+  const openAroundBoard = (x: number, y: number) => {
+    [-1, 0, 1].forEach((dx) => {
+      [-1, 0, 1].forEach((dy) => {
+        if (userInputs[y + dy]?.[x + dx] === 0) {
+          newUserInputs[y + dy][x + dx] = 1;
+          setUserInputs(newUserInputs);
+        }
+      });
+    });
   };
 
-  const checkBombArea = (x: number, y: number) => {
-    // checkTrueFlagがtrueだったら旗がたってない周りのブロックを空ける
+  const aroundBombFlagCount = (x: number, y: number) => {
+    let aBCN = 0;
+    let aFCN = 0;
+    [-1, 0, 1].forEach((dx) =>
+      [-1, 0, 1].forEach((dy) => {
+        if (bombMap[y + dy]?.[x + dx] === 1) {
+          aBCN += 1;
+          if (userInputs[y + dy]?.[x + dx] === 2) {
+            aFCN += 1;
+          } else if (userInputs[y + dy]?.[x + dx] === 3) {
+            aFCN += 1;
+          }
+        }
+      })
+    );
+    console.log('aBCN: ', aBCN);
+    console.log('AFCN: ', aFCN);
+    console.log('---------');
+    if (aBCN !== 0) {
+      if (aBCN === aFCN) {
+        openAroundBoard(x, y);
+      }
+    }
   };
 
   const checkAround8 = (x: number, y: number) => {
@@ -61,6 +88,7 @@ const Home = () => {
     if (userInputs[y][x] === 0) {
       newUserInputs[y][x] = 1;
       setUserInputs(newUserInputs);
+      aroundBombFlagCount(x, y);
     }
   };
 
