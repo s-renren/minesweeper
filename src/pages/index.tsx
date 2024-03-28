@@ -139,26 +139,31 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.edge}>
-        <div className={styles.board}>
-          {board.map((row, y) =>
-            row.map((number, x) => (
-              <div
-                className={
-                  number === -1
-                    ? styles.stone
-                    : number === 9 || number === 10
-                    ? `${styles.flag} ${styles.stone}`
-                    : styles.number
-                }
-                style={{
-                  backgroundPositionX: 30 - 30 * number,
-                }}
-                key={`${y}-${x}`}
-                onClick={() => clickL(x, y)}
-                onContextMenu={() => clickR(x, y)}
-              />
-            ))
-          )}
+        <div className={styles.funcarea}>
+          <div className={styles.smile}>
+            
+            <div className={styles.board}>
+              {board.map((row, y) =>
+                row.map((number, x) => (
+                  <div
+                    className={
+                      number === -1
+                        ? styles.stone
+                        : number === 9 || number === 10
+                        ? `${styles.flag} ${styles.stone}`
+                        : styles.number
+                    }
+                    style={{
+                      backgroundPositionX: 30 - 30 * number,
+                    }}
+                    key={`${y}-${x}`}
+                    onClick={() => clickL(x, y)}
+                    onContextMenu={() => clickR(x, y)}
+                  />
+                ))
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

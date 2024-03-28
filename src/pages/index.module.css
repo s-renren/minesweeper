@@ -128,7 +128,7 @@
   flex-wrap: wrap;
   width: 270px;
   height: 270px;
-  margin-bottom: 25px;
+  margin-top:75px;
   background-color: #aaa;
 }
 
@@ -155,4 +155,19 @@
   height: 400px;
   background-color: #ccc;
   border: outset 5px #ddd;
+}
+
+.funcarea {
+  display: flex;
+  width: 280px;
+  height: 60px;
+  margin-bottom: 310px;
+  background-color: #ccc;
+  border: inset 5px #ddd;
+}
+
+.smile {
+  display: block;
+  background-image: url('../../assets/images/icons.png');
+  background-position: center;
 }
